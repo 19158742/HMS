@@ -1,3 +1,4 @@
 # HMS
-Hotel Management
-This is dev branch
+
+Hotel Management System
+
