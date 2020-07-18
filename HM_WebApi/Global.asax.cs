@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using DinkToPdf;
+using DinkToPdf.Contracts;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HM_WebApi
 {
@@ -19,6 +22,12 @@ namespace HM_WebApi
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+		}
+		public void ConfigureServices(IServiceCollection services)
+		{
+			services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
+			//services.Addcontr();
 		}
 	}
 }
