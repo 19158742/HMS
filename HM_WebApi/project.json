@@ -1,0 +1,17 @@
+﻿{
+    {
+        "tools": {
+            "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final",
+            "Amazon.Lambda.Tools": "1.1.0-preview1"
+        }
+    },
+    {
+        "dependencies": {
+            "Amazon.Lambda.AspNetCoreServer": "0.8.4-preview1",
+            "Amazon.Lambda.Tools": {
+                "type": "build",
+                "version": "1.1.0-preview1"
+            }
+        }
+    }
+}
