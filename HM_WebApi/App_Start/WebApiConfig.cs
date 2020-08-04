@@ -15,10 +15,17 @@ namespace HM_WebApi
 			// Web API routes
 			config.MapHttpAttributeRoutes();
 
+			//config.Routes.MapHttpRoute(
+			//	name: "DefaultApi",
+			//	routeTemplate: "api/{controller}/{action}/{id}",
+			//	defaults: new { id = RouteParameter.Optional }
+			//);
+
 			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
-				routeTemplate: "api/{controller}/{action}/{id}",
-				defaults: new { id = RouteParameter.Optional }
+				routeTemplate: "{controller}/{action}/{id}",
+				defaults: new { controller = "Invoice", action = "GetItems", id = RouteParameter.Optional }
+
 			);
 		}
 	}
