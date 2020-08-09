@@ -1,0 +1,82 @@
+﻿@model HotelMgmt.Models.tbl_TmpBookingInfo
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Booking Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @*<dt>
+            @Html.DisplayNameFor(model => model.room_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room_id)
+        </dd>*@
+
+        <dt>
+            @Html.Label("Room Type")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room_type)
+        </dd>
+
+        <dt>
+            @Html.Label("From Date")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => Convert.ToDateTime(model.from_dt).Date)
+        </dd>
+
+        <dt>
+            @Html.Label("To Date")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => Convert.ToDateTime(model.to_dt).Date)
+        </dd>
+
+        <dt>
+            @Html.Label("Customer Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cust_name)
+        </dd>
+
+        <dt>
+            @Html.Label("Total Amount")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total_amt)
+        </dd>
+
+        <dt>
+            @Html.Label("Type of transaction")
+        </dt>
+
+        <dd>
+            @{ if (Convert.ToString(Model.transactn_type).Equals("1"))
+                {
+                    @Html.Label("Cash");
+                }
+                else
+                {
+                    @Html.Label("Online");
+                }
+            }
+            </dd>
+
+    </dl>
+</div>
+<p>    
+  
+</p>

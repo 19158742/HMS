@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="hoteldbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_BookingInfo">
+          <Key>
+            <PropertyRef Name="booking_id" />
+          </Key>
+          <Property Name="booking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="room_id" Type="int" />
+          <Property Name="room_type" Type="nvarchar" MaxLength="20" />
+          <Property Name="from_dt" Type="date" />
+          <Property Name="to_dt" Type="date" />
+          <Property Name="cust_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="total_amt" Type="float" />
+          <Property Name="transactn_type" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tbl_RoomInfo">
+          <Key>
+            <PropertyRef Name="room_id" />
+          </Key>
+          <Property Name="room_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="room_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="room_type" Type="nvarchar" MaxLength="20" />
+          <Property Name="room_price" Type="float" />
+        </EntityType>
+        <EntityType Name="tbl_TmpBookingInfo">
+          <Key>
+            <PropertyRef Name="tmp_booking_id" />
+          </Key>
+          <Property Name="tmp_booking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="room_id" Type="int" />
+          <Property Name="room_type" Type="nvarchar" MaxLength="20" />
+          <Property Name="from_dt" Type="date" />
+          <Property Name="to_dt" Type="date" />
+          <Property Name="cust_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="total_amt" Type="float" />
+          <Property Name="transactn_type" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityContainer Name="hoteldbModelStoreContainer">
+          <EntitySet Name="tbl_BookingInfo" EntityType="Self.tbl_BookingInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RoomInfo" EntityType="Self.tbl_RoomInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_TmpBookingInfo" EntityType="Self.tbl_TmpBookingInfo" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hoteldbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_BookingInfo">
+          <Key>
+            <PropertyRef Name="booking_id" />
+          </Key>
+          <Property Name="booking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="room_id" Type="Int32" />
+          <Property Name="room_type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="from_dt" Type="DateTime" Precision="0" />
+          <Property Name="to_dt" Type="DateTime" Precision="0" />
+          <Property Name="cust_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="total_amt" Type="Double" />
+          <Property Name="transactn_type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_RoomInfo">
+          <Key>
+            <PropertyRef Name="room_id" />
+          </Key>
+          <Property Name="room_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="room_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="room_type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="room_price" Type="Double" />
+        </EntityType>
+        <EntityType Name="tbl_TmpBookingInfo">
+          <Key>
+            <PropertyRef Name="tmp_booking_id" />
+          </Key>
+          <Property Name="tmp_booking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="room_id" Type="Int32" />
+          <Property Name="room_type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="from_dt" Type="DateTime" Precision="0" />
+          <Property Name="to_dt" Type="DateTime" Precision="0" />
+          <Property Name="cust_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="total_amt" Type="Double" />
+          <Property Name="transactn_type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="hoteldbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_BookingInfo" EntityType="Self.tbl_BookingInfo" />
+          <EntitySet Name="tbl_RoomInfo" EntityType="Self.tbl_RoomInfo" />
+          <EntitySet Name="tbl_TmpBookingInfo" EntityType="Self.tbl_TmpBookingInfo" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hoteldbModelStoreContainer" CdmEntityContainer="hoteldbEntities">
+          <EntitySetMapping Name="tbl_BookingInfo">
+            <EntityTypeMapping TypeName="hoteldbModel.tbl_BookingInfo">
+              <MappingFragment StoreEntitySet="tbl_BookingInfo">
+                <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="room_type" ColumnName="room_type" />
+                <ScalarProperty Name="from_dt" ColumnName="from_dt" />
+                <ScalarProperty Name="to_dt" ColumnName="to_dt" />
+                <ScalarProperty Name="cust_name" ColumnName="cust_name" />
+                <ScalarProperty Name="total_amt" ColumnName="total_amt" />
+                <ScalarProperty Name="transactn_type" ColumnName="transactn_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_RoomInfo">
+            <EntityTypeMapping TypeName="hoteldbModel.tbl_RoomInfo">
+              <MappingFragment StoreEntitySet="tbl_RoomInfo">
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="room_name" ColumnName="room_name" />
+                <ScalarProperty Name="room_type" ColumnName="room_type" />
+                <ScalarProperty Name="room_price" ColumnName="room_price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_TmpBookingInfo">
+            <EntityTypeMapping TypeName="hoteldbModel.tbl_TmpBookingInfo">
+              <MappingFragment StoreEntitySet="tbl_TmpBookingInfo">
+                <ScalarProperty Name="tmp_booking_id" ColumnName="tmp_booking_id" />
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="room_type" ColumnName="room_type" />
+                <ScalarProperty Name="from_dt" ColumnName="from_dt" />
+                <ScalarProperty Name="to_dt" ColumnName="to_dt" />
+                <ScalarProperty Name="cust_name" ColumnName="cust_name" />
+                <ScalarProperty Name="total_amt" ColumnName="total_amt" />
+                <ScalarProperty Name="transactn_type" ColumnName="transactn_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

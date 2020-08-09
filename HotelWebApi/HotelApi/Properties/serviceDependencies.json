@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "hoteldata.cq2itgjroqlm.us-east-1.rds.amazonaws.com,1433"
+    }
+  }
+}

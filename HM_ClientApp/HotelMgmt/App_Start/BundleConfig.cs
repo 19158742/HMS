@@ -9,19 +9,13 @@ namespace HotelMgmt
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/Scripts").Include(
-                        "~/Scripts/daterangepicker.min.js"));
+                         "~/Scripts/jquery-ui.min.js",
+                         "~/Scripts/daterangepicker.min.js"
+                        ));
 
             bundles.Add(new StyleBundle("~/Stylesheet").Include(
+                   "~/Stylesheet/jquery-ui.min.css",
                    "~/Stylesheet/daterangepicker.css"));
-
-            bundles.Add(new ScriptBundle("~/Scripts").Include(
-                     "~/Scripts/jquery-ui.min.js"));
-
-            bundles.Add(new StyleBundle("~/Stylesheet").Include(
-                    "~/Scripts/jquery-ui.min.css"));
-
-            bundles.Add(new ScriptBundle("~/Scripts").Include(
-         "~/Scripts/moment-en-ie.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
