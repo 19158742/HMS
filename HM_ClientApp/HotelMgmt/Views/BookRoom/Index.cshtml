@@ -28,7 +28,12 @@
 
         var today = new Date();
 
-        $('[type=datetime]').datepicker({
+        $('#FromDt').datepicker({
+            dateFormat: "mm/dd/yy",
+            changeMonth: true
+        });
+
+        $('#ToDt').datepicker({
             dateFormat: "mm/dd/yy",
             changeMonth: true
         });
@@ -57,36 +62,36 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.RoomTpe, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.TextBoxFor(model => model.RoomTpe, new { @Value = ViewBag.roomtype, @readonly = "readonly" })
         </div>
     </div>
 
     <div class="form-group" id="divFromDt" data-provide="datepicker">
         @Html.LabelFor(model => model.FromDt, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.EditorFor(model => model.FromDt, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.FromDt, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" data-provide="datepicker">
         @Html.LabelFor(model => model.ToDt, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.EditorFor(model => model.ToDt, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ToDt, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        <button id="btnGetData" type="button" class="btn btn-outline-primary rounded-0">Load Room List</button>
-        <div id="updatePanel" style="padding:20px;">
+        <button id="btnGetData" type="button" class="btn btn-outline-primary rounded-0 col-md-2">Load Room List</button>
+        <div id="updatePanel" class="col-md-3">
             <span id="result" />
         </div>
     </div>
     <div class="form-group" id="DivSelectRoom" style="display:none">
         @Html.LabelFor(model => model.RoomId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.DropDownListFor(model => model.RoomId, new SelectList("room_id", "room_name"), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.RoomId, "", new { @class = "text-danger" })
         </div>
@@ -103,7 +108,7 @@
         <div class="form-group" >
             @Html.LabelFor(model => model.TotalAmt, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -111,14 +116,16 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.TransactionType, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.TransactionType, ViewData["tranlist"] as SelectList, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.TransactionType, new List<SelectListItem>
+        { new SelectListItem{Text="Cash", Value="1",Selected=true}, new SelectListItem{Text="Online", Value="2"}}, new { @class = "form-control" })
+                    
                     @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "text-danger" })
                 </div>
             </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" id="btnSubmit" value="Create" class="btn btn-default" />
         </div>
     </div>
         </div>

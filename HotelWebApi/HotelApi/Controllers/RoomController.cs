@@ -25,7 +25,7 @@ namespace HotelApi.Controllers
                 var rid = (from r in dc.tbl_RoomInfo
                              join rb in dc.tbl_BookingInfo on r.room_id equals rb.room_id
                              where r.room_type == roomType && (rb.from_dt >= dtf && rb.to_dt <= dtt) && r.room_id == rb.room_id
-                             select r.room_id).ToArray();
+                             select rb.room_id).Distinct().ToArray();
                 
                 roomList2 = dc.tbl_RoomInfo.Where(x => x.room_type == roomType).ToList();
                 roomList1 = roomList2.Where(x => !rid.Contains(x.room_id)).ToList();  

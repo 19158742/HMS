@@ -59,21 +59,7 @@
             @Html.DisplayFor(model => model.total_amt)
         </dd>
 
-        <dt>
-            @Html.Label("Type of transaction")
-        </dt>
-
-        <dd>
-            @{ if (Convert.ToString(Model.transactn_type).Equals("1"))
-                {
-                    @Html.Label("Cash");
-                }
-                else
-                {
-                    @Html.Label("Online");
-                }
-            }
-            </dd>
+ 
 
     </dl>
 </div>

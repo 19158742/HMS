@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using HotelMgmt.Models;
 namespace HotelMgmt.Controllers
 {
+    [Authorize]
     public class BookRoomController : Controller
     {
         hoteldbEntities _db;
@@ -17,16 +20,10 @@ namespace HotelMgmt.Controllers
         public ActionResult Index(string roomtype)
         {
             ViewBag.roomtype = roomtype;
-            var list = new SelectList(new[]
-                {
-                    new {id=1,name="Cash" },
-                    new {id=2,name="Online" }
-                },"id","name",1);
-
-            ViewData["tranlist"] = list;
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult ViewPhotos()
         {
             return View();
@@ -35,47 +32,26 @@ namespace HotelMgmt.Controllers
         [HttpPost]
         public ActionResult Create(BookRoomViewModels objBookRoom)
         {
-            //if (ModelState.IsValid)
-            //{
-                tbl_TmpBookingInfo objTbl = new tbl_TmpBookingInfo();
-                objTbl.room_id = objBookRoom.RoomId;
-                objTbl.room_type = objBookRoom.RoomTpe;
-                objTbl.from_dt = Convert.ToDateTime(objBookRoom.FromDt);
-                objTbl.to_dt = Convert.ToDateTime(objBookRoom.ToDt);
-                objTbl.cust_name = objBookRoom.CustomerName;
-                objTbl.total_amt = objBookRoom.TotalAmt;
-                objTbl.transactn_type = objBookRoom.TransactionType;
-                _db.tbl_TmpBookingInfo.Add(objTbl);
-                _db.SaveChanges();
-                
-            //}
-            return View("Details",objTbl);
-        }
+            DateTime dt1 = DateTime.ParseExact(objBookRoom.FromDt, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            DateTime dt2 = DateTime.ParseExact(objBookRoom.ToDt, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            objBookRoom.FromDt =Convert.ToString(dt1);
+            objBookRoom.ToDt = Convert.ToString(dt2);
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44391/Bookmyroom");
 
-        //    public string CheckAvail() {
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync<BookRoomViewModels>("Bookmyroom", objBookRoom);
+                postTask.Wait();
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return View("Details", objBookRoom);
+                }
+            }
+            return RedirectToAction("Index","Home");
+        }      
 
-        //    DateTime fromdate = Convert.ToDateTime((HttpContext.Request.Url).ToString().Split('?')[1].Split('&')[0].Split('=')[1]);
-        //    DateTime todate = Convert.ToDateTime((HttpContext.Request.Url).ToString().Split('?')[1].Split('&')[1].Split('=')[1]);
-        //    string roomtype = Convert.ToString(ViewBag.roomtype);
-        //    bool ifuser = true;
-
-        //    if (ifuser == false)
-
-        //    {
-
-        //        return "Available";
-
-        //    }
-
-        //    if (ifuser == true)
-
-        //    {
-
-        //        return "Not Available";
-
-        //    }
-
-        //    return "";
-        //}
+       
     }
 }

@@ -13,23 +13,28 @@ namespace HotelApi
             config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
-            
+
             //config.Routes.MapHttpRoute(
             //    name: "DefaultApi",
             //    routeTemplate: "api/{controller}/{id}",
             //    defaults: new { id = RouteParameter.Optional }
             //);
-            config.Routes.MapHttpRoute(
-              name: "InvoiceRoute",
-              routeTemplate: "{controller}/{action}/{id}",
-              defaults: new { controller = "Invoice", action = "GetItems", id = RouteParameter.Optional }
+            //config.Routes.MapHttpRoute(
+            //  name: "InvoiceRoute",
+            //  routeTemplate: "{controller}/{action}/{id}",
+            //  defaults: new { controller = "Invoice", action = "GetItems", id = RouteParameter.Optional }
 
-);
+            //);
             config.Routes.MapHttpRoute(
-  name: "DefaultApi",
-  routeTemplate: "{controller}/{action}/{id}",
-  defaults: new { controller = "Room", action = "Get", id = RouteParameter.Optional }
+                  name: "RoomApi",
+                  routeTemplate: "{controller}/{action}/{id}",
+                  defaults: new { controller = "Room", action = "Get", id = RouteParameter.Optional }
+            );
 
+            config.Routes.MapHttpRoute(
+                  name: "BookmyroomApi",
+                  routeTemplate: "{controller}/{action}",
+                  defaults: new { controller = "Bookmyroom", action = "Post" }
 );
         }
     }
