@@ -1,0 +1,107 @@
+﻿@model HotelMgmt.Models.BookingInfoModels
+
+@{
+    ViewBag.Title = "Index";
+}
+@*@Styles.Render("~/Content/css")*@
+<link href="~/Content/Site.css" rel="stylesheet" />
+<ul class="nav nav-pills">
+    <li class="nav-item ">
+        <a class="nav-link active rounded-0" data-toggle="pill" href="#home">Incoming Booking Requests</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link rounded-0" data-toggle="pill" href="#menu1">Confirmed Booking Requests</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane container active p-0" id="home">
+        <h5 class="text-uppercase p-2 text-center">List of Incoming Requests</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.Label("Room Type")</th>
+                    <th>@Html.Label("Customer Name")</th>
+                    <th>@Html.Label("From")</th>
+                    <th>@Html.Label("To")</th>
+                    <th>@Html.Label("Total Amount")</th>
+                    <th>@Html.Label("Transaction Type")</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tmpbooking in Model.TmpBookingInfos)
+                {
+                    <tr>
+                        <td>@tmpbooking.room_type</td>
+                        <td>@tmpbooking.cust_name</td>
+                        <td>@tmpbooking.from_dt</td>
+                        <td>@tmpbooking.to_dt</td>
+                        <td>@tmpbooking.total_amt</td>
+                        @{
+                            string ttype = Convert.ToString(tmpbooking.transactn_type);
+                            string filtertype = ttype.Equals("1") ? "Cash" : "Online";
+
+                        }
+                        <td>@Html.Label(filtertype)</td>
+                        <td>
+                            @using (Html.BeginForm("Approve", "ApproveRoom", new { id = tmpbooking.tmp_booking_id }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" value="Approve" />
+                            }
+                            
+                            @using (Html.BeginForm("DeleteTmp", "ApproveRoom", new { id = tmpbooking.tmp_booking_id }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" value="Delete" />
+                            }
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane container fade p-0" id="menu1">
+        <h5 class="text-uppercase p-2 text-center">List of Confirmed Requests</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.Label("Room Type")</th>
+                    <th>@Html.Label("Customer Name")</th>
+                    <th>@Html.Label("From")</th>
+                    <th>@Html.Label("To")</th>
+                    <th>@Html.Label("Total Amount")</th>
+                    <th>@Html.Label("Transaction Type")</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var confbooking in Model.BookingInfos)
+                {
+                    <tr>
+                        <td>@confbooking.room_type</td>
+                        <td>@confbooking.cust_name</td>
+                        <td>@confbooking.from_dt</td>
+                        <td>@confbooking.to_dt</td>
+                        <td>@confbooking.total_amt</td>
+                        @{
+                            string ttype = Convert.ToString(confbooking.transactn_type);
+                            string filtertype = ttype.Equals("1") ? "Cash" : "Online";
+
+                        }
+                        <td>@Html.Label(filtertype)</td>
+                        <td>
+                            @using (Html.BeginForm("DeleteConf", "ApproveRoom", new { id = confbooking.booking_id }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" value="Delete" />
+                            }
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>  
