@@ -14,11 +14,11 @@ namespace HotelApi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "api/{controller}/{id}",
-            //    defaults: new { id = RouteParameter.Optional }
-            //);
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
             //config.Routes.MapHttpRoute(
             //  name: "InvoiceRoute",
             //  routeTemplate: "{controller}/{action}/{id}",
@@ -31,11 +31,11 @@ namespace HotelApi
                   defaults: new { controller = "Room", action = "Get", id = RouteParameter.Optional }
             );
 
-            config.Routes.MapHttpRoute(
-                  name: "BookmyroomApi",
-                  routeTemplate: "{controller}/{action}",
-                  defaults: new { controller = "Bookmyroom", action = "Post" }
-);
+//            config.Routes.MapHttpRoute(
+//                  name: "BookmyroomApi",
+//                  routeTemplate: "{controller}/{action}",
+//                  defaults: new { controller = "Bookmyroom", action = "Post" }
+//);
         }
     }
 }

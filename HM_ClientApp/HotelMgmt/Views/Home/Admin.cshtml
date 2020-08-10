@@ -1,0 +1,38 @@
+﻿@model HotelMgmt.Models.tbl_RoomInfo
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin</h2>
+<div class="content">
+    <div class="float-left">
+        <ul id="update-rooms">
+            <li>
+                <div><div class="item">Room ID</div><span></span></div>
+                <div><div class="item">Name</div> <input type="text" /></div>
+                <div><div class="item">Room Type</div> <input type="text" /></div>
+                <div><div class="item">Room Price</div> <input type="text" /></div>
+                <div>
+                    <input type="button" value="Update" />
+                    <input type="button" value="Delete Item" />
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="float-right">
+        <h2>Add New Room</h2>
+        <form id="room">
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <legend>Contact</legend>
+                @Html.EditorForModel()
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+            </fieldset>
+        </form>
+    </div>
+</div>

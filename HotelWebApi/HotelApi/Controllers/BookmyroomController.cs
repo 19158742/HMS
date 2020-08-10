@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using HotelApi.Models;
 using HotelMgmt.Models;
 
@@ -24,22 +25,25 @@ namespace HotelApi.Controllers
         }
 
         // POST: api/Bookmyroom
-        public string Post()
+        [EnableCors(origins: "https://localhost:44391", headers: "*", methods: "*")]
+        [HttpPost]
+        [Route("PostNewBookRoom")]
+        public string PostNewBookRoom([FromBody] BookRoomViewModels Bookmyroom)
         {
-            //using (var ctx = new hoteldbEntities())
-            //{
-            //    ctx.tbl_TmpBookingInfo.Add(new tbl_TmpBookingInfo()
-            //    {
-            //        room_id = Bookmyroom.RoomId,
-            //        room_type = Bookmyroom.RoomTpe,
-            //        from_dt = Convert.ToDateTime(Bookmyroom.FromDt),
-            //        to_dt = Convert.ToDateTime(Bookmyroom.ToDt),
-            //        cust_name = Bookmyroom.CustomerName,
-            //        total_amt = Bookmyroom.TotalAmt,
-            //        transactn_type = Bookmyroom.TransactionType
-            //});
-            //    ctx.SaveChanges();
-            //}
+            using (var ctx = new hoteldbEntities())
+            {
+                ctx.tbl_TmpBookingInfo.Add(new tbl_TmpBookingInfo()
+                {
+                    room_id = Bookmyroom.RoomId,
+                    room_type = Bookmyroom.RoomTpe,
+                    from_dt = Convert.ToDateTime(Bookmyroom.FromDt),
+                    to_dt = Convert.ToDateTime(Bookmyroom.ToDt),
+                    cust_name = Bookmyroom.CustomerName,
+                    total_amt = Bookmyroom.TotalAmt,
+                    transactn_type = Bookmyroom.TransactionType
+                });
+                ctx.SaveChanges();
+            }
             //tbl_TmpBookingInfo objTbl = new tbl_TmpBookingInfo();
 
             //objTbl.room_id = objBookRoom.RoomId;
