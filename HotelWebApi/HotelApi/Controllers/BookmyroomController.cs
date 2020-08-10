@@ -25,24 +25,24 @@ namespace HotelApi.Controllers
         }
 
         // POST: api/Bookmyroom
-        [EnableCors(origins: "https://localhost:44391", headers: "*", methods: "*")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
-        [Route("PostNewBookRoom")]
-        public string PostNewBookRoom([FromBody] BookRoomViewModels Bookmyroom)
+        //[Route("PostNewBookRoom")]
+        public string PostNewBookRoom([FromBody] string Bookmyroom)
         {
             using (var ctx = new hoteldbEntities())
             {
-                ctx.tbl_TmpBookingInfo.Add(new tbl_TmpBookingInfo()
-                {
-                    room_id = Bookmyroom.RoomId,
-                    room_type = Bookmyroom.RoomTpe,
-                    from_dt = Convert.ToDateTime(Bookmyroom.FromDt),
-                    to_dt = Convert.ToDateTime(Bookmyroom.ToDt),
-                    cust_name = Bookmyroom.CustomerName,
-                    total_amt = Bookmyroom.TotalAmt,
-                    transactn_type = Bookmyroom.TransactionType
-                });
-                ctx.SaveChanges();
+                //ctx.tbl_TmpBookingInfo.Add(new tbl_TmpBookingInfo()
+                //{
+                //    room_id = Bookmyroom.RoomId,
+                //    room_type = Bookmyroom.RoomTpe,
+                //    from_dt = Convert.ToDateTime(Bookmyroom.FromDt),
+                //    to_dt = Convert.ToDateTime(Bookmyroom.ToDt),
+                //    cust_name = Bookmyroom.CustomerName,
+                //    total_amt = Bookmyroom.TotalAmt,
+                //    transactn_type = Bookmyroom.TransactionType
+                //});
+                //ctx.SaveChanges();
             }
             //tbl_TmpBookingInfo objTbl = new tbl_TmpBookingInfo();
 

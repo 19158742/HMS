@@ -12,12 +12,12 @@
     <hr />
     <dl class="dl-horizontal">
         @*<dt>
-            @Html.DisplayNameFor(model => model.room_id)
-        </dt>
+                @Html.DisplayNameFor(model => model.room_id)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.room_id)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.room_id)
+            </dd>*@
 
         <dt>
             @Html.Label("Room Type")
@@ -58,10 +58,13 @@
         <dd>
             @Html.DisplayFor(model => model.total_amt)
         </dd>
-
- 
-
     </dl>
+    @using (Html.BeginForm("DownloadFile", "BookRoom"))
+    {
+
+        <input type="submit" value="Download Receipt" />
+
+    }
 </div>
 <p>    
   

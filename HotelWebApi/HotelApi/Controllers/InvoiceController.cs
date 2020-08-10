@@ -36,7 +36,7 @@ namespace HotelApi
             {
                 /*
                Below code returns html response
-                 https://localhost:44335/ 
+                 https://localhost:44335/invoice/getitems?invoiceNumber=11&customerName=shraddha&productName=P1&productName=P2&productPrice=2&productPrice=32&totalAmt=43&balanceAmt=5&transactionType=cash&siteName=dsf 
                  
                 var prodlist = new List<ProductInfo>();
                 for (int i = 0; i < productName.Length; i++)
@@ -64,21 +64,22 @@ namespace HotelApi
                 */
                 // This code is for export Database data to PDF file
                 string fileName = Guid.NewGuid() + ".pdf";
-                string filePath = Path.Combine(ConfigurationManager.AppSettings["PDFPath"], fileName);
-                CreatePDF(fileName, filePath);
+                //string filePath = Path.Combine(ConfigurationManager.AppSettings["PDFPath"], fileName);
+                // CreatePDF(fileName);
 
-                string reqBook = filePath; // format.ToLower() == "pdf" ? bookPath_Pdf : (format.ToLower() == "xls" ? bookPath_xls : (format.ToLower() == "doc" ? bookPath_doc : bookPath_zip));
-                string bookName = fileName;
+                //string reqBook = filePath; // format.ToLower() == "pdf" ? bookPath_Pdf : (format.ToLower() == "xls" ? bookPath_xls : (format.ToLower() == "doc" ? bookPath_doc : bookPath_zip));
+                //string bookName = fileName;
                 //converting Pdf file into bytes array  
-                var dataBytes = System.IO.File.ReadAllBytes(filePath);
+                //var dataBytes = System.IO.File.ReadAllBytes(filePath);
                 //adding bytes to memory stream   
-                var dataStream = new MemoryStream(dataBytes);
-
+                //var dataStream = new MemoryStream(dataBytes);
+                Stream stream = new MemoryStream(CreatePDF());
                 HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK);
                 //HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
-                httpResponseMessage.Content = new StreamContent(dataStream);
+                //httpResponseMessage.Content = new StreamContent(dataStream);
+                httpResponseMessage.Content = new StreamContent(stream);
                 httpResponseMessage.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-                httpResponseMessage.Content.Headers.ContentDisposition.FileName = bookName;
+                httpResponseMessage.Content.Headers.ContentDisposition.FileName = fileName;
                 httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
 
                 return httpResponseMessage;
@@ -89,7 +90,7 @@ namespace HotelApi
             }
         }
 
-        protected void CreatePDF(string fileName, string filePath)
+        protected byte[] CreatePDF()
         {
             var data = Request.RequestUri.ParseQueryString();
             Document doc = new Document(PageSize.A4, 2, 2, 2, 2);
@@ -106,7 +107,9 @@ namespace HotelApi
            
             try
             {
-                PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+                //PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+                MemoryStream ms = new MemoryStream();
+                PdfWriter writer = PdfWriter.GetInstance(doc, ms);
                 PdfPTable pdfTab = new PdfPTable(2); // here 2 is no of column
                 pdfTab.HorizontalAlignment = 1; // 0- Left, 1- Center, 2- right
                 pdfTab.SpacingBefore = 20f;
@@ -139,13 +142,17 @@ namespace HotelApi
                 doc.Add(p5);
                 doc.Close();
 
-                byte[] content = File.ReadAllBytes(filePath);
+                //byte[] content = File.ReadAllBytes(filePath);
+                byte[] content = ms.ToArray();
                 HttpContext context = HttpContext.Current;
 
                 context.Response.BinaryWrite(content);
                 context.Response.ContentType = "application/pdf";
-                context.Response.AppendHeader("Content-Disposition", "attachment; filename=" + fileName);
+                //context.Response.AppendHeader("Content-Disposition", "attachment; filename=" + fileName);
+                context.Response.AppendHeader("Content-Length", content.Length.ToString());
+                context.Response.OutputStream.Write(content, 0, (int)content.Length);
                 context.Response.End();
+                return content;
             }
             catch (Exception)
             {
