@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql.onprem",
+      "connectionId": "hoteldata.cq2itgjroqlm.us-east-1.rds.amazonaws.com,1433",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

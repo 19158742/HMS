@@ -73,8 +73,8 @@ namespace HM_WebApi
                 //adding bytes to memory stream   
                 var dataStream = new MemoryStream(dataBytes);
 
-                //HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK);
-                HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+                HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK);
+                //HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
                 httpResponseMessage.Content = new StreamContent(dataStream);
                 httpResponseMessage.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
                 httpResponseMessage.Content.Headers.ContentDisposition.FileName = bookName;
@@ -82,7 +82,7 @@ namespace HM_WebApi
 
                 return httpResponseMessage;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return null;
             }

@@ -17,5 +17,9 @@ namespace HotelMgmt
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new System.Web.Mvc.AuthorizeAttribute());
+        }
     }
 }
