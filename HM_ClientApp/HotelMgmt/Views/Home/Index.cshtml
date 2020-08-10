@@ -2,11 +2,11 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Hotel Room Booking</h1>
-    <p class="lead">Now booking a room is just one click away !</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">View Photos</a></p>
-</div>
+    <div class="jumbotron">
+        <h1>Hotel Room Booking</h1>
+        <p class="lead">Now booking a room is just one click away !</p>
+        @Html.ActionLink("View Photos", "ViewPhotos", "BookRoom")
+    </div>
 
 <div class="row">
     <div class="col-md-4">

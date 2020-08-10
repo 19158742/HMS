@@ -6,129 +6,130 @@
 }
 
 @section Scripts{
+    <style type="text/css">
+        .validation {
+            color: red;
+            margin-bottom: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/Scripts/jquery-ui.min.js")
-    @Scripts.Render("~/Stylesheet/jquery-ui.min.css")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Styles.Render("~/Content/css")
+    <script src="~/Scripts/GetAvailRoomData.js"></script>
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript">
+
         var today = new Date();
 
-        $('[type=datetime]').datepicker({
-            dateFormat: "dd/M/yy",
+        $('#FromDt').datepicker({
+            dateFormat: "mm/dd/yy",
             changeMonth: true
         });
 
-        $("#ChkAvail").on("click", function () {
-            var frmDt = $('#FromDt').val();
-            var toDt = $('#ToDt').val();
-            var url = "/BookRoom/CheckAvail?fdt=" + frmDt + "&tdt=" + toDt;
-
-
-            $.get(url, function (data) {
-
-                if (data == "Available") {
-
-                    $("#result").html("<span style='color:green'>Available</span>");
-                    $("#FromDt").css('background-color', '');
-                    $("#ToDt").css('background-color', '');
-                }
-
-                else {
-                    $("#result").html("<span style='color:red'>Not Available</span>");
-                    $("#FromDt").css('background-color', '#e97878');
-                    $("#ToDt").css('background-color', '#e97878');
-                }
-            });
-            return false;
+        $('#ToDt').datepicker({
+            dateFormat: "mm/dd/yy",
+            changeMonth: true
         });
+
     </script>
 }
 
 
 <h2>Book Your Room</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "BookRoom"))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookingId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BookingId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BookingId, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group" style="display :none">
+        @Html.LabelFor(model => model.BookingId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.BookingId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.BookingId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RoomId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RoomId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RoomId, "", new { @class = "text-danger" })
-            </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RoomTpe, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.RoomTpe, new { @Value = ViewBag.roomtype, @readonly = "readonly" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RoomTpe, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.RoomTpe, new { @Value = ViewBag.roomtype, @readonly = "true" })
-            </div>
+    <div class="form-group" id="divFromDt" data-provide="datepicker">
+        @Html.LabelFor(model => model.FromDt, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.FromDt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FromDt, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group" id="divFromDt" data-provide="datepicker">
-            @Html.LabelFor(model => model.FromDt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FromDt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FromDt, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group" data-provide="datepicker">
+        @Html.LabelFor(model => model.ToDt, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.ToDt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ToDt, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ToDt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ToDt, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
-                @Html.ValidationMessageFor(model => model.ToDt, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.ActionLink("Check Availability", "CheckAvail", "BookRoom", null, new { @class = "btn btn-save", id = "ChkAvail" })
+    <div class="form-group">
+        <button id="btnGetData" type="button" class="btn btn-outline-primary rounded-0 col-md-2">Load Room List</button>
+        <div id="updatePanel" class="col-md-3">
             <span id="result" />
         </div>
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
-                </div>
+    </div>
+    <div class="form-group" id="DivSelectRoom" style="display:none">
+        @Html.LabelFor(model => model.RoomId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.DropDownListFor(model => model.RoomId, new SelectList("room_id", "room_name"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RoomId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div id="DivFillForm" style="display:none" >
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+   
+        <div class="form-group" >
+            @Html.LabelFor(model => model.TotalAmt, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.TotalAmt, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
-                </div>
-            </div>
+        </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.TransactionType, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.TransactionType, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DropDownListFor(model => model.TransactionType, new List<SelectListItem>
+        { new SelectListItem{Text="Cash", Value="1",Selected=true}, new SelectListItem{Text="Online", Value="2"}}, new { @class = "form-control" })
+                    
                     @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "text-danger" })
                 </div>
-            </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
             </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="btnSubmit" value="Create" class="btn btn-default" />
         </div>
     </div>
-}
+        </div>
+</div>
 
+
+}
