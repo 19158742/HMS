@@ -38,10 +38,11 @@ namespace HotelMgmt.Controllers
             objBookRoom.ToDt = Convert.ToString(dt2);
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44391/Bookmyroom");
+                client.BaseAddress = new Uri("https://localhost:44391/bookmyroom/postnewbookroom");
 
-                //HTTP POST
-                var postTask = client.PostAsJsonAsync<BookRoomViewModels>("Bookmyroom", objBookRoom);
+                
+            //HTTP POST
+            var postTask = client.PostAsJsonAsync<BookRoomViewModels>("PostNewBookRoom", objBookRoom);
                 postTask.Wait();
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
