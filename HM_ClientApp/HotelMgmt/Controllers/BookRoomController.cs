@@ -38,7 +38,7 @@ namespace HotelMgmt.Controllers
             objBookRoom.FromDt =Convert.ToString(dt1);
             objBookRoom.ToDt = Convert.ToString(dt2);
             //string serverUrl = "https://localhost:44391/Bookmyroom/GetNewBookRoomResponse?Bookmyroom="+objBookRoom;
-            string serverUrl = "https://localhost:44391/Bookmyroom/GetNewBookRoomResponse?roomid=" + objBookRoom.RoomId + "&roomtype="+objBookRoom.RoomTpe+"&frmdt="+objBookRoom.FromDt+"&todt="+objBookRoom.ToDt+"&custname="+objBookRoom.CustomerName+"&totalamt="+objBookRoom.TotalAmt+"&trantype="+objBookRoom.TransactionType;
+            string serverUrl = "https://hotelapi20200806072002.azurewebsites.net/Bookmyroom/GetNewBookRoomResponse?roomid=" + objBookRoom.RoomId + "&roomtype="+objBookRoom.RoomTpe+"&frmdt="+objBookRoom.FromDt+"&todt="+objBookRoom.ToDt+"&custname="+objBookRoom.CustomerName+"&totalamt="+objBookRoom.TotalAmt+"&trantype="+objBookRoom.TransactionType;
             var client = new System.Net.WebClient();
             client.UseDefaultCredentials = true;
             client.Credentials = System.Net.CredentialCache.DefaultCredentials;
@@ -86,7 +86,7 @@ namespace HotelMgmt.Controllers
                         tran_type = s.transactn_type,
                         site_name = "Hotel Booking Site"
                     }).First();
-            string serverUrl = "https://localhost:44391/invoice/getitems?invoiceNumber="+ lastInvoiceId +"&customerName="+obj.cust_name+"&productName="+obj.prod_name +" Room"+"&productPrice="+obj.prod_price+"&totalAmt="+obj.total_amt+"&balanceAmt="+obj.bal_amt+"&transactionType="+obj.tran_type+"&siteName=" + obj.site_name;
+            string serverUrl = "https://hotelapi20200806072002.azurewebsites.net/invoice/getitems?invoiceNumber=" + lastInvoiceId +"&customerName="+obj.cust_name+"&productName="+obj.prod_name +" Room"+"&productPrice="+obj.prod_price+"&totalAmt="+obj.total_amt+"&balanceAmt="+obj.bal_amt+"&transactionType="+obj.tran_type+"&siteName=" + obj.site_name;
             //string serverUrl = "https://localhost:44391/invoice/getitems?invoiceNumber=11&customerName=shraddha&productName=P1&productName=P2&productPrice=2&productPrice=32&totalAmt=43&balanceAmt=5&transactionType=cash&siteName=dsf";
             //html response start
             //var client = new System.Net.WebClient();
