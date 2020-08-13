@@ -37,27 +37,57 @@ namespace HotelMgmt.Controllers
             DateTime dt2 = DateTime.ParseExact(objBookRoom.ToDt, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             objBookRoom.FromDt =Convert.ToString(dt1);
             objBookRoom.ToDt = Convert.ToString(dt2);
-            using (var client = new HttpClient())
+            //string serverUrl = "https://localhost:44391/Bookmyroom/GetNewBookRoomResponse?Bookmyroom="+objBookRoom;
+            string serverUrl = "https://localhost:44391/Bookmyroom/GetNewBookRoomResponse?roomid=" + objBookRoom.RoomId + "&roomtype="+objBookRoom.RoomTpe+"&frmdt="+objBookRoom.FromDt+"&todt="+objBookRoom.ToDt+"&custname="+objBookRoom.CustomerName+"&totalamt="+objBookRoom.TotalAmt+"&trantype="+objBookRoom.TransactionType;
+            var client = new System.Net.WebClient();
+            client.UseDefaultCredentials = true;
+            client.Credentials = System.Net.CredentialCache.DefaultCredentials;
+            client.Headers.Add("Content-Type", "text/plain");
+            string result = client.DownloadString(serverUrl);
+            if(result.Contains("yes"))
             {
-                client.BaseAddress = new Uri("https://localhost:44391/bookmyroom/postnewbookroom");
-
-                
-            //HTTP POST
-            var postTask = client.PostAsJsonAsync<BookRoomViewModels>("PostNewBookRoom", objBookRoom);
-                postTask.Wait();
-                var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    return View("Details", objBookRoom);
-                }
+                return View("Details", objBookRoom);
             }
-             return RedirectToAction("Index","Home");
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri("https://localhost:44391/bookmyroom/postnewbookroom");
+
+
+            ////HTTP POST
+            //var postTask = client.PostAsJsonAsync<BookRoomViewModels>("PostNewBookRoom", objBookRoom);
+            //    postTask.Wait();
+            //    var result = postTask.Result;
+            //    if (result.IsSuccessStatusCode)
+            //    {
+            //        return View("Details", objBookRoom);
+            //    }
+            //}
+            //return RedirectToAction("Index","Home");
            
         }
 
-        public FileStreamResult DownloadFile(string requestUrl)
+       
+        public FileStreamResult DownloadFile(BookRoomViewModels objBookRoom)
         {
-            string serverUrl = "https://localhost:44391/invoice/getitems?invoiceNumber=11&customerName=shraddha&productName=P1&productName=P2&productPrice=2&productPrice=32&totalAmt=43&balanceAmt=5&transactionType=cash&siteName=dsf";
+            int lastInvoiceId = _db.tbl_TmpBookingInfo.Max(item => item.tmp_booking_id);
+             var obj = (from s in _db.tbl_TmpBookingInfo
+                    select new
+                    {
+                        cust_name = s.cust_name,
+                        invoice_id = s.tmp_booking_id,
+                        prod_name = s.room_type,
+                        prod_price =s.total_amt,
+                        total_amt = s.total_amt,
+                        bal_amt = 0,
+                        tran_type = s.transactn_type,
+                        site_name = "Hotel Booking Site"
+                    }).First();
+            string serverUrl = "https://localhost:44391/invoice/getitems?invoiceNumber="+ lastInvoiceId +"&customerName="+obj.cust_name+"&productName="+obj.prod_name +" Room"+"&productPrice="+obj.prod_price+"&totalAmt="+obj.total_amt+"&balanceAmt="+obj.bal_amt+"&transactionType="+obj.tran_type+"&siteName=" + obj.site_name;
+            //string serverUrl = "https://localhost:44391/invoice/getitems?invoiceNumber=11&customerName=shraddha&productName=P1&productName=P2&productPrice=2&productPrice=32&totalAmt=43&balanceAmt=5&transactionType=cash&siteName=dsf";
             //html response start
             //var client = new System.Net.WebClient();
             //client.Headers.Add("Content-Type", "text/html");

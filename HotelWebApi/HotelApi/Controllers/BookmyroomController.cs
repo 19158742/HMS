@@ -26,35 +26,38 @@ namespace HotelApi.Controllers
 
         // POST: api/Bookmyroom
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        [HttpPost]
-        //[Route("PostNewBookRoom")]
-        public string PostNewBookRoom([FromBody] string Bookmyroom)
+        //[HttpPost]
+      
+        [AllowAnonymous]
+        //[ActionName("PostNewBookRoom")]
+        public string GetNewBookRoomResponse([FromUri] int roomid,string roomtype,string frmdt,string todt,string custname,string totalamt,string trantype)
         {
-            using (var ctx = new hoteldbEntities())
-            {
-                //ctx.tbl_TmpBookingInfo.Add(new tbl_TmpBookingInfo()
-                //{
-                //    room_id = Bookmyroom.RoomId,
-                //    room_type = Bookmyroom.RoomTpe,
-                //    from_dt = Convert.ToDateTime(Bookmyroom.FromDt),
-                //    to_dt = Convert.ToDateTime(Bookmyroom.ToDt),
-                //    cust_name = Bookmyroom.CustomerName,
-                //    total_amt = Bookmyroom.TotalAmt,
-                //    transactn_type = Bookmyroom.TransactionType
-                //});
-                //ctx.SaveChanges();
-            }
-            //tbl_TmpBookingInfo objTbl = new tbl_TmpBookingInfo();
+            //using (var ctx = new hoteldbEntities())
+            //{
+            //ctx.tbl_TmpBookingInfo.Add(new tbl_TmpBookingInfo()
+            //{
+            //    room_id = Bookmyroom.room_id,
+            //    room_type = Bookmyroom.room_type,
+            //    from_dt = Convert.ToDateTime(Bookmyroom.from_dt),
+            //    to_dt = Convert.ToDateTime(Bookmyroom.to_dt),
+            //    cust_name = Bookmyroom.cust_name,
+            //    total_amt = Bookmyroom.total_amt,
+            //    transactn_type = Bookmyroom.transactn_type
+            //});
+            //ctx.SaveChanges();
+            hoteldbEntities _db = new hoteldbEntities();
+            tbl_TmpBookingInfo objTbl = new tbl_TmpBookingInfo();
+            objTbl.room_id = roomid;
+            objTbl.room_type = roomtype;
+            objTbl.from_dt = Convert.ToDateTime(frmdt);
+            objTbl.to_dt = Convert.ToDateTime(todt);
+            objTbl.cust_name = custname;
+            objTbl.total_amt = Convert.ToDouble(totalamt);
+            objTbl.transactn_type = trantype;
+            _db.tbl_TmpBookingInfo.Add(objTbl);
+            _db.SaveChanges();
+            //}
 
-            //objTbl.room_id = objBookRoom.RoomId;
-            //objTbl.room_type = objBookRoom.RoomTpe;
-            //objTbl.from_dt = dt1;
-            //objTbl.to_dt = dt2;
-            //objTbl.cust_name = objBookRoom.CustomerName;
-            //objTbl.total_amt = objBookRoom.TotalAmt;
-            //objTbl.transactn_type = objBookRoom.TransactionType;
-            //_db.tbl_TmpBookingInfo.Add(objTbl);
-            //_db.SaveChanges();
             // return Ok();
             return "yes";
         }

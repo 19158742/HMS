@@ -8,6 +8,8 @@ using HotelApi.Models;
 
 using Org.BouncyCastle.Math.EC.Rfc7748;
 using System.Web.Http.Cors;
+using System.Threading;
+
 namespace HotelApi.Controllers
 {
     public class RoomController : ApiController
@@ -16,6 +18,7 @@ namespace HotelApi.Controllers
         [EnableCors(origins: "http://hotelapi20200806072002.azurewebsites.net", headers: "*", methods: "*")]
         public HttpResponseMessage Get(string roomType,string dtFrom,string dtTo)
         {
+            string username = Thread.CurrentPrincipal.Identity.Name;
             DateTime dtf = Convert.ToDateTime(dtFrom);
             DateTime dtt = Convert.ToDateTime(dtTo);
             List<tbl_RoomInfo> roomList1 = new List<tbl_RoomInfo>();

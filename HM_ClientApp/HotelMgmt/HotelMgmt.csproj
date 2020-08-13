@@ -221,8 +221,23 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaim.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BookingInfoModels.cs" />
     <Compile Include="Models\BookRoomViewModels.cs" />
+    <Compile Include="Models\C__MigrationHistory.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -249,7 +264,12 @@
     <Compile Include="Models\tbl_TmpBookingInfo.cs">
       <DependentUpon>DBModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WeatherViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="App_Data\aspnet-HotelMgmt-20200720110033.mdf" />
+    <Content Include="App_Data\aspnet-HotelMgmt-20200720110033_log.ldf">
+      <DependentUpon>aspnet-HotelMgmt-20200720110033.mdf</DependentUpon>
+    </Content>
     <Content Include="Scripts\carousel.js" />
     <Content Include="Scripts\GetAvailRoomData.js" />
     <Compile Include="Startup.cs" />
@@ -306,6 +326,7 @@
     <Content Include="Models\DBModels.edmx.diagram">
       <DependentUpon>DBModels.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\HotelMgmt - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -454,10 +475,10 @@
     <Content Include="Views\ManageRooms\Edit.cshtml" />
     <Content Include="Views\ManageRooms\Index.cshtml" />
     <Content Include="Views\ApproveRoom\Index.cshtml" />
+    <Content Include="Views\Home\Weather.cshtml" />
+    <Content Include="Views\Home\Sports.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
