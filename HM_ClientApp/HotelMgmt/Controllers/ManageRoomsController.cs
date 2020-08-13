@@ -18,29 +18,50 @@ namespace HotelMgmt.Controllers
         // GET: ManageRooms
         public ActionResult Index()
         {
-            return View(db.tbl_RoomInfo.ToList());
-        }
+            try
+            {
+                return View(db.tbl_RoomInfo.ToList());
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+}
 
         // GET: ManageRooms/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            try 
+            { 
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                tbl_RoomInfo tbl_RoomInfo = db.tbl_RoomInfo.Find(id);
+                if (tbl_RoomInfo == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tbl_RoomInfo);
             }
-            tbl_RoomInfo tbl_RoomInfo = db.tbl_RoomInfo.Find(id);
-            if (tbl_RoomInfo == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                return null;
             }
-            return View(tbl_RoomInfo);
         }
 
         // GET: ManageRooms/Create
         public ActionResult Create()
         {
-            return View();
-        }
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+}
 
         // POST: ManageRooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -49,6 +70,8 @@ namespace HotelMgmt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "room_id,room_name,room_type,room_price")] tbl_RoomInfo tbl_RoomInfo)
         {
+            try
+            { 
             if (ModelState.IsValid)
             {
                 db.tbl_RoomInfo.Add(tbl_RoomInfo);
@@ -57,11 +80,18 @@ namespace HotelMgmt.Controllers
             }
 
             return View(tbl_RoomInfo);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         // GET: ManageRooms/Edit/5
         public ActionResult Edit(int? id)
         {
+            try
+            { 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -72,6 +102,11 @@ namespace HotelMgmt.Controllers
                 return HttpNotFound();
             }
             return View(tbl_RoomInfo);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         // POST: ManageRooms/Edit/5
@@ -81,6 +116,7 @@ namespace HotelMgmt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "room_id,room_name,room_type,room_price")] tbl_RoomInfo tbl_RoomInfo)
         {
+            try { 
             if (ModelState.IsValid)
             {
                 db.Entry(tbl_RoomInfo).State = EntityState.Modified;
@@ -88,11 +124,17 @@ namespace HotelMgmt.Controllers
                 return RedirectToAction("Index");
             }
             return View(tbl_RoomInfo);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         // GET: ManageRooms/Delete/5
         public ActionResult Delete(int? id)
         {
+            try { 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -103,6 +145,11 @@ namespace HotelMgmt.Controllers
                 return HttpNotFound();
             }
             return View(tbl_RoomInfo);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         // POST: ManageRooms/Delete/5
@@ -110,19 +157,32 @@ namespace HotelMgmt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            try { 
             tbl_RoomInfo tbl_RoomInfo = db.tbl_RoomInfo.Find(id);
             db.tbl_RoomInfo.Remove(tbl_RoomInfo);
             db.SaveChanges();
             return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
-        }
+            catch (Exception ex)
+            {
+               
+            }
+}
     }
 }

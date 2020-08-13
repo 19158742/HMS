@@ -71,7 +71,7 @@
                     }
                 },
                 error: function () {
-                    alert('Error!');
+                    //alert('Error!');
                 }
             });
         }
@@ -108,7 +108,7 @@
                     $('#TotalAmt').val(Difference_In_Days * data);
                 },
                 error: function () {
-                    alert('Error!');
+                    //alert('Error!');
                 }
             });
         }

@@ -19,6 +19,7 @@ using System.Configuration;
 using System.Web.UI;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Auth;
+using System.Drawing;
 
 namespace HotelApi
 {
@@ -92,13 +93,22 @@ namespace HotelApi
 
         protected byte[] CreatePDF()
         {
+           
             var data = Request.RequestUri.ParseQueryString();
             Document doc = new Document(PageSize.A4, 2, 2, 2, 2);
 
+            var boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
+            boldFont.SetColor(0, 0, 204);
+            var phrase = new Phrase();
+            Chunk c = new Chunk("" + data[7], boldFont);
+            c.SetUnderline(2, -3);
+            phrase.Add(c);
             // Create paragraph for show in PDF file header
-            Paragraph p = new Paragraph("" + data[7]);
+            Paragraph p = new Paragraph(phrase);
+            p.Alignment = Element.ALIGN_CENTER;
+            
             //p.set("center");
-           
+
             Paragraph p1 = new Paragraph("Invoice Number - " + data[0]);
             //p1.SetAlignment("center");
 
@@ -110,6 +120,7 @@ namespace HotelApi
                 //PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
                 MemoryStream ms = new MemoryStream();
                 PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+
                 PdfPTable pdfTab = new PdfPTable(2); // here 2 is no of column
                 pdfTab.HorizontalAlignment = 1; // 0- Left, 1- Center, 2- right
                 pdfTab.SpacingBefore = 20f;
@@ -132,6 +143,7 @@ namespace HotelApi
                 Paragraph p5 = new Paragraph("Balance Amount - " + data[5]);
                 //p5.SetAlignment("left");
 
+               
                 doc.Open();
                 doc.Add(p);
                 doc.Add(p1);
