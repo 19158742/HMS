@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
+using HotelApi.Models;
 
 namespace HotelApi
 {
@@ -9,6 +11,10 @@ namespace HotelApi
     {
         public static void Register(HttpConfiguration config)
         {
+            //config.Filters.Add(new BasicAuthenticationAttribute());
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/octet-stream"));
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
             // Web API configuration and services
             config.EnableCors();
             // Web API routes

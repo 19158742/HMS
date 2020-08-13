@@ -27,6 +27,28 @@
 
 </head>
 <body>
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '743025306456270',
+                cookie: true,
+                xfbml: true,
+                version: 'v8.0'
+            });
+
+            FB.AppEvents.logPageView();
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -51,7 +73,14 @@
                             <li>@Html.ActionLink("Approve", "Index", "ApproveRoom")</li>
                         </ul>
                     </li>
-                 </ul>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Knowledge</span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Weather", "Weather", "Home")</li>
+                            <li>@Html.ActionLink("Sports", "Sports", "Home")</li>
+                        </ul>
+                    </li>
+                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

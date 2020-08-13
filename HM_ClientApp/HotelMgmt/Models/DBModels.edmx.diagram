@@ -8,6 +8,14 @@
         <EntityTypeShape EntityType="hoteldbModel.tbl_BookingInfo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="hoteldbModel.tbl_RoomInfo" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="hoteldbModel.tbl_TmpBookingInfo" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="hoteldbModel.C__MigrationHistory" Width="2.125" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="hoteldbModel.AspNetRole" Width="2.125" PointX="5.375" PointY="2.625" />
+        <EntityTypeShape EntityType="hoteldbModel.AspNetUserClaim" Width="2.125" PointX="9.875" PointY="1.125" />
+        <EntityTypeShape EntityType="hoteldbModel.AspNetUserLogin" Width="2.125" PointX="9.875" PointY="4" />
+        <EntityTypeShape EntityType="hoteldbModel.AspNetUser" Width="2.125" PointX="7.625" PointY="1.375" />
+        <AssociationConnector Association="hoteldbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="hoteldbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="hoteldbModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

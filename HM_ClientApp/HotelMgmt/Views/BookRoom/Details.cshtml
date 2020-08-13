@@ -1,71 +1,62 @@
-﻿@model HotelMgmt.Models.tbl_TmpBookingInfo
+﻿@model HotelMgmt.Models.BookRoomViewModels
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using (Html.BeginForm("DownloadFile", "BookRoom"))
+{
+    <h2>Details</h2>
 
-<h2>Details</h2>
+    <div>
+        <h4>Booking Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
 
-<div>
-    <h4>Booking Details</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        @*<dt>
-                @Html.DisplayNameFor(model => model.room_id)
+            <dt>
+                @Html.Label("Room Type")
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.room_id)
-            </dd>*@
+                @Html.DisplayFor(model => model.RoomTpe)
+            </dd>
 
-        <dt>
-            @Html.Label("Room Type")
-        </dt>
+            <dt>
+                @Html.Label("From Date")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.room_type)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => Convert.ToDateTime(model.FromDt).Date)
+            </dd>
 
-        <dt>
-            @Html.Label("From Date")
-        </dt>
+            <dt>
+                @Html.Label("To Date")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => Convert.ToDateTime(model.from_dt).Date)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => Convert.ToDateTime(model.ToDt).Date)
+            </dd>
 
-        <dt>
-            @Html.Label("To Date")
-        </dt>
+            <dt>
+                @Html.Label("Customer Name")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => Convert.ToDateTime(model.to_dt).Date)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CustomerName)
+            </dd>
 
-        <dt>
-            @Html.Label("Customer Name")
-        </dt>
+            <dt>
+                @Html.Label("Total Amount")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.cust_name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.TotalAmt)
+            </dd>
+        </dl>
 
-        <dt>
-            @Html.Label("Total Amount")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.total_amt)
-        </dd>
-    </dl>
-    @using (Html.BeginForm("DownloadFile", "BookRoom"))
-    {
 
         <input type="submit" value="Download Receipt" />
 
-    }
-</div>
-<p>    
-  
-</p>
+        
+    </div>
+}

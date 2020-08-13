@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "Weather";
+}
+    <head>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+    </head>
+
+<br/>
+<br/>
+<br/>
+<div>
+    <strong>City Name  : Dublin
+    <br />
+    <br />
+
+    <button id="btnSubmit">Get Weather Forecast</button>
+    
+</div>
+
+
+<div>
+    <h2>Weather Forecast</h2>
+    <table>
+        <tr>
+            <td>
+                <strong>Latitude: </strong>
+                <label id="lblLat"></label><br />
+                <strong>Longitude: </strong>
+                <label id="lblLon"></label>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Description:</strong>
+                <label id="lblDescription"></label><br />
+                <strong>Humidity:</strong>
+                <label id="lblHumidity"></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Temperature (Feels Like)<label id="lblTempFeelsLike"></label><br />
+                Temperature <label id="lblTemp"></label><br />
+                Temperature (Min)<label id="lblTempMin"></label><br />
+                Temperature (Max)<label id="lblTempMax"></label><br />
+            </td>
+        </tr>
+
+
+    </table>
+</div>
+
+<script>
+
+    $("#btnSubmit").click(function () {
+        var mykey = "295dfee9118233e095540774ef2eb070";
+
+            $.ajax({
+                url: "https://localhost:44342/Home/WeatherDetail" , 
+                type: "POST",
+            success: function (rsltval) {
+                var data =JSON.parse(rsltval);
+                console.log(data);
+                $("#lblCountry").text(data.Country);
+                $("#lblLat").text(data.Lat);
+                $("#lblLon").text(data.Lon);
+                $("#lblDescription").text(data.Description);
+                $("#lblHumidity").text(data.Humidity);
+                $("#lblTempFeelsLike").text(data.TempFeelsLike);
+                $("#lblTemp").text(data.Temp);
+                $("#lblTempMax").text(data.TempMax);
+                $("#lblTempMin").text(data.TempMin);
+                
+                //data - response from server
+            },
+            error: function () {
+
+            }
+        });
+      
+    });
+
+</script>  
