@@ -45,19 +45,20 @@
                  $("#ToDt").parent().next(".validation").remove(); // remove it
         }
         if (!focusSet) {
+            var apiBaseUrl = "https://hotelapi20200806072002.azurewebsites.net/";
             $.ajax({
                 url: apiBaseUrl + 'Room/Get?roomtype=' + roomtype + '&dtFrom=' + frmdt + '&dtTo=' + todt,
                 type: 'GET',
-                dataType: 'xml',
+                dataType: 'json',
                 success: function (data) {
                     var $table = $('<table/>').addClass('dataTable table table-bordered table-striped');
                     var $header = $('<thead/>').html('<tr><th style="visibility: hidden;">id</th><th>Room Name</th><th>Price Per Day</th></tr>');
                     $table.append($header);
-                    for (i = 0; i < data.getElementsByTagName("room_id").length; i++) {
+                    for (i = 0; i < data.length; i++) {
                         var $row = $('<tr/>');
-                        $row.append($('<td style="visibility: hidden;"/>').html(data.getElementsByTagName("room_id")[i].textContent));
-                        $row.append($('<td/>').html(data.getElementsByTagName("room_name")[i].textContent));
-                        $row.append($('<td/>').html(data.getElementsByTagName("room_price")[i].textContent));
+                        $row.append($('<td style="visibility: hidden;"/>').html(data[i].room_id));
+                        $row.append($('<td/>').html(data[i].room_name));
+                        $row.append($('<td/>').html(data[i].room_price));
                         $table.append($row);
                     }
 
@@ -65,12 +66,12 @@
                     $('#DivSelectRoom').css("display", "block");
                     $('#RoomId').empty();
                     $('#RoomId').append($('<option>').text("Select Room").attr('value', 0));
-                    for (i = 0; i < data.getElementsByTagName("room_id").length; i++) {
-                        $('#RoomId').append($('<option>').text(data.getElementsByTagName("room_name")[i].textContent).attr('value', data.getElementsByTagName("room_id")[i].textContent));
+                    for (i = 0; i < data.length; i++) {
+                        $('#RoomId').append($('<option>').text(data[i].room_name).attr('value', data[i].room_id));
                     }
                 },
                 error: function () {
-                    alert('Error!');
+                    //alert('Error!');
                 }
             });
         }
@@ -107,7 +108,7 @@
                     $('#TotalAmt').val(Difference_In_Days * data);
                 },
                 error: function () {
-                    alert('Error!');
+                    //alert('Error!');
                 }
             });
         }

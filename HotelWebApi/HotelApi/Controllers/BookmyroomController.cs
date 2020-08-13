@@ -25,11 +25,7 @@ namespace HotelApi.Controllers
         }
 
         // POST: api/Bookmyroom
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        //[HttpPost]
-      
-        [AllowAnonymous]
-        //[ActionName("PostNewBookRoom")]
+        [EnableCors(origins: "http://hotelapi20200806072002.azurewebsites.net", headers: "*", methods: "*")]
         public string GetNewBookRoomResponse([FromUri] int roomid,string roomtype,string frmdt,string todt,string custname,string totalamt,string trantype)
         {
             //using (var ctx = new hoteldbEntities())
